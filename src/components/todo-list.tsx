@@ -3,11 +3,11 @@
 
 import { useState, KeyboardEvent } from 'react';
 import { Trash2, Plus, CalendarCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { createTodo, toggleTodo, deleteTodo } from '@/app/actions'; // 서버 액션 임포트
+import { Button } from '@/src/components/ui/button';
+import { Input } from '@/src/components/ui/input';
+import { Checkbox } from '@/src/components/ui/checkbox';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
+import { createTodo, toggleTodo, deleteTodo } from '@/src/app/actions'; // 서버 액션 임포트
 
 // Prisma가 생성한 타입 사용 가능하지만 간단히 정의
 type Todo = {

@@ -1,7 +1,7 @@
 // app/page.tsx
-import { prisma } from '@/lib/db';
-import TodoList from '@/components/todo-list'; // 위에서 만든 컴포넌트
-import { ModeToggle } from '@/components/mode-toggle';
+import { prisma } from '@/src/lib/db';
+import TodoList from '@/src/components/todo-list'; // 위에서 만든 컴포넌트
+import { ModeToggle } from '@/src/components/mode-toggle';
 
 // async 컴포넌트로 만듭니다
 export default async function Home() {

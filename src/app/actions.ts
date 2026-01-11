@@ -1,7 +1,7 @@
 // app/actions.ts
 'use server';
 
-import { prisma } from '@/lib/db';
+import { prisma } from '@/src/lib/db';
 import { revalidatePath } from 'next/cache';
 
 // 1. 생성 (Create)
