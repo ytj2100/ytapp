@@ -1,15 +1,25 @@
 // app/page.tsx
-import { Button } from "@/components/ui/button"
+import { prisma } from '@/lib/db';
+import TodoList from '@/components/todo-list'; // 위에서 만든 컴포넌트
+import { ModeToggle } from '@/components/mode-toggle';
 
-export default function Home() {
+// async 컴포넌트로 만듭니다
+export default async function Home() {
+  // DB에서 최신순으로 데이터 가져오기 (Server Side)
+  const todos = await prisma.todo.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
-      <h1 className="text-3xl font-bold">Shadcn/ui 연동 성공!</h1>
-      <div className="flex gap-2">
-        <Button>기본 버튼</Button>
-        <Button variant="destructive">삭제 버튼</Button>
-        <Button variant="outline">외곽선 버튼</Button>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4 relative">
+      <div className="absolute top-4 right-4">
+        <ModeToggle />
       </div>
-    </div>
-  )
+      
+      {/* DB에서 가져온 데이터를 클라이언트 컴포넌트에 전달 */}
+      <TodoList initialTodos={todos} />
+    </main>
+  );
 }
