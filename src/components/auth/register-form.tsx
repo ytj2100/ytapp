@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition, useState } from "react"
+import { useTransition, useState, useEffect } from "react"
 import * as z from "zod"
 import { register } from "@/actions/register"
 import { useRouter } from "next/navigation"
@@ -14,32 +14,41 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import Link from "next/link"
 
 const RegisterSchema = z.object({
-  name: z.string().min(1, "이름을 입력해주세요."),
-  email: z.string().email("이메일 형식이 올바르지 않습니다."),
-  password: z.string().min(6, "비밀번호는 최소 6자 이상이어야 합니다."),
+  name    : z.string().min  (1, "이름을 입력해주세요."),
+  email   : z.string().email("이메일 형식이 올바르지 않습니다."),
+  password: z.string().min  (6, "비밀번호는 최소 6자 이상이어야 합니다."),
 })
 
 export const RegisterForm = () => {
-  const [error, setError] = useState<string | undefined>("")
-  const [success, setSuccess] = useState<string | undefined>("")
+  console.log(">> RegisterForm ㅜㅜㅜㅜㅜㅜ");
+  useEffect(()=>{
+    console.log(">> RegisterForm ㅗㅗㅗㅗㅗㅗ : UseEffect ");
+  });
+  
+  const [error    , setError       ] = useState<string | undefined>("")
+  const [success  , setSuccess     ] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
-
+  
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: { name: "", email: "", password: "" },
   })
-
+  
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    console.log(">> RegisterForm ㅜㅜㅜㅜㅜㅜ :: setError");
     setError("")
+    console.log(">> RegisterForm ㅜㅜㅜㅜㅜㅜ :: setSuccess");
     setSuccess("")
     
     startTransition(() => {
       register(values).then((data) => {
         if (data.error) {
+          console.log(">> RegisterForm ㅜㅜㅜㅜㅜㅜ :: setError2");
           setError(data.error)
         }
         if (data.success) {
+          console.log(">> RegisterForm ㅜㅜㅜㅜㅜㅜ :: setSuccess");
           setSuccess(data.success)
           // 2초 후 로그인 화면(홈)으로 이동
           setTimeout(() => router.push("/"), 2000) 
