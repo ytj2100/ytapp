@@ -9,11 +9,15 @@ import { X } from "lucide-react";
 import DashboardView from "@/components/views/DashboardView"; // (직접 만드셔야 함)
 //import UserListView from "@/components/views/UserListView";   // (직접 만드셔야 함)
 import SettingsView from "@/components/views/SettingsView";   // (직접 만드셔야 함)
+import Ttest from "@/components/views/Ttest";   // (직접 만드셔야 함)
+// import TodolistView from "@/components/views/SettingsView copy";   // (직접 만드셔야 함)
 
 const COMPONENT_MAP: Record<string, React.ReactNode> = {
   DashboardView: <DashboardView />,
   // UserListView: <UserListView />,
   SettingsView: <SettingsView />,
+  Ttest: <Ttest />,
+  // TodolistView: <TodolistView />,
 };
 
 export function TabContent() {

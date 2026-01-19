@@ -1,6 +1,7 @@
 // src/components/layout/Header.tsx
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { LogoutButton } from "@/components/auth/logout-button"
 
 export function Header() {
   // 실제 구현 시 SessionProvider 등에서 유저 정보를 가져옵니다.
@@ -18,6 +19,9 @@ export function Header() {
           <AvatarFallback>AD</AvatarFallback>
         </Avatar>
         <Button variant="outline" size="sm">로그아웃</Button>
+        <LogoutButton>
+          계정 로그아웃
+        </LogoutButton>
       </div>
     </header>
   );

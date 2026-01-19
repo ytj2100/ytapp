@@ -10,6 +10,10 @@ const MENU_ITEMS = [
   { id: "dashboard", label: "대시보드", key: "DashboardView" },
   { id: "users", label: "사용자 관리", key: "UserListView" },
   { id: "settings", label: "시스템 설정", key: "SettingsView" },
+  { id: "todolist", label: "Tode List", key: "todolist" },
+  { id: "Ttest", label: "Ttest", key: "Ttest" },
+
+      // redirectTo: "/todolist", // 로그인 성공 후 리다이렉트
 ];
 
 export function Sidebar() {
