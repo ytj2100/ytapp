@@ -14,7 +14,7 @@ export default auth((req) => {
   if (isRoot && isLoggedIn) {
     // return Response.redirect(new URL('/dashboard', req.nextUrl))
     // return Response.redirect(new URL('/todolist', req.nextUrl))
-    return Response.redirect(new URL('/main', req.nextUrl))
+    return Response.redirect(new URL('dashboard', req.nextUrl))
   }
 
   // 2. 비로그인 상태에서 대시보드 접근 시 -> 루트(로그인화면)로 이동

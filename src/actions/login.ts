@@ -20,7 +20,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password,
       // redirectTo: "/dashboard", // 로그인 성공 후 리다이렉트
       // redirectTo: "/todolist", // 로그인 성공 후 리다이렉트
-      redirectTo: "/main", // 로그인 성공 후 리다이렉트
+      redirectTo: "/dashboard", // 로그인 성공 후 리다이렉트
     })
   } catch (error) {
     if (error instanceof AuthError) {
