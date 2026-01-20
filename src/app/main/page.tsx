@@ -1,7 +1,7 @@
 // src/app/page.tsx
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { TabContent } from "@/components/layout/TabContent";
+import { TabManager } from "@/components/layout/tab-manager";
 //import { prisma } from "@/lib/prisma"; // (Prisma client 인스턴스)
 
 export default async function DashboardPage() {
@@ -24,6 +24,6 @@ export default async function DashboardPage() {
   //   </div>
   // );
   return (
-    <TabContent />      
+    <TabManager />      
   );
 }

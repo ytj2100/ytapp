@@ -1,28 +1,30 @@
-import { Sidebar } from "@/components/layout/Sidebar"
-import { Header } from "@/components/layout/Header"
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Header } from "@/components/layout/Header"; // Header도 여기서 불러야 합니다!
 
 export default function MainLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-muted/10">
+    // 1. 전체 틀: 세로(Column) 방향! 이게 핵심입니다.
+    <div className="flex flex-col h-screen w-full bg-background overflow-hidden">
       
-      {/* 좌측: 고정 사이드바 */}
-      <Sidebar />
+      {/* 2. 헤더: 가장 위에 고정 (전체 너비) */}
+      <Header />
 
-      {/* 우측: 헤더 + 컨텐츠 */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      {/* 3. 바디: 헤더 아래 공간을 가로(Row)로 나눔 */}
+      <div className="flex flex-1 overflow-hidden">
         
-        {/* 상단: 공통 헤더 (탭 + 유저/테마) */}
-        <Header />
+        {/* 3-1. 사이드바: 왼쪽 */}
+        <Sidebar />
 
-        {/* 하단: 실제 페이지 컨텐츠 (스크롤 가능) */}
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
+        {/* 3-2. 컨텐츠: 오른쪽 나머지 */}
+        <main className="flex-1 flex flex-col overflow-hidden relative">
+           {children}
         </main>
+        
       </div>
     </div>
-  )
+  );
 }

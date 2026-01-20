@@ -1,27 +1,35 @@
-// src/components/layout/Header.tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { LogoutButton } from "@/components/auth/logout-button"
+'use client';
+
+import { useAppStore } from '@/lib/store';
+import { Button } from '@/components/ui/button';
+import { Menu } from 'lucide-react'; 
 
 export function Header() {
-  // 실제 구현 시 SessionProvider 등에서 유저 정보를 가져옵니다.
+  const { toggleSidebar } = useAppStore();
   const user = { name: "관리자", email: "admin@example.com" };
 
   return (
-    <header className="h-16 border-b flex items-center justify-between px-6 bg-background">
-      <h2 className="text-lg font-semibold">메인 화면</h2>
+    // ⭐ z-50으로 제일 위에 뜨게 하고, 배경색 필수
+    <header className="h-16 border-b flex items-center justify-between px-4 bg-background shrink-0 z-50">
+      
+      {/* 1. 좌측: 햄버거 버튼 + 로고 (여기에 고정!) */}
       <div className="flex items-center gap-4">
-        <span className="text-sm text-muted-foreground">
-          {user.name}님 환영합니다
-        </span>
-        <Avatar>
-          <AvatarImage src="" />
-          <AvatarFallback>AD</AvatarFallback>
-        </Avatar>
-        <Button variant="outline" size="sm">로그아웃</Button>
-        <LogoutButton>
-          계정 로그아웃
-        </LogoutButton>
+        <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+          <Menu className="h-5 w-5" />
+        </Button>
+        <h1 className="font-bold text-xl select-none">My ERP</h1>
+      </div>
+
+      {/* 2. 우측: 유저 정보 */}
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground hidden md:block">
+            {user.name}님
+          </span>
+          <div className="h-8 w-8 rounded-full bg-slate-500 flex items-center justify-center text-white font-bold text-xs">
+              {user.name[0]}
+          </div>
+        </div>
       </div>
     </header>
   );
