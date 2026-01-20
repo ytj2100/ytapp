@@ -1,3 +1,8 @@
+'use client'; // useEffect를 쓰려면 클라이언트 컴포넌트여야 함
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppStore } from '@/lib/store';
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 
@@ -6,24 +11,27 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { isAuthenticated } = useAppStore();
+
+  // ⭐ 로그인 안 했으면 쫓아내기
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace('/'); // 로그인 화면으로 강제 이동
+    }
+  }, [isAuthenticated, router]);
+
+  // 잠깐 깜빡임 방지 (로그인 안됐으면 화면 안 그림)
+  if (!isAuthenticated) return null; 
+
   return (
-    // 1. 전체 화면 (세로 배치)
     <div className="flex flex-col h-screen w-full bg-background overflow-hidden">
-      
-      {/* 2. 헤더 (최상단 고정) */}
       <Header />
-
-      {/* 3. 본문 영역 (가로 배치: 사이드바 + 컨텐츠) */}
       <div className="flex flex-1 overflow-hidden">
-        
-        {/* 사이드바 */}
         <Sidebar />
-
-        {/* 컨텐츠 (탭 매니저가 들어올 곳) */}
         <main className="flex-1 flex flex-col overflow-hidden relative bg-background">
           {children}
         </main>
-
       </div>
     </div>
   );

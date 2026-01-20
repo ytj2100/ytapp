@@ -7,12 +7,25 @@ export interface Tab {
   componentKey: string; // 컴포넌트 레지스트리에서 찾을 키 (예: 'UserListView')
 }
 
+interface User {
+  name: string;
+  email: string;
+}
+
 // 2. 스토어 상태(State) 및 액션(Action) 타입 정의
 interface AppState {
   // --- 상태 변수 ---
   tabs: Tab[];           // 열려있는 탭 목록
   activeTabId: string;   // 현재 보고 있는 탭의 ID
   isSidebarOpen: boolean; // 사이드바가 열려있는지 여부 (추가됨 ⭐)
+
+  // ⭐ [NEW] 인증 관련 상태
+  user: User | null;         // 로그인한 유저 정보
+  isAuthenticated: boolean;  // 로그인 여부
+
+  // ⭐ [NEW] 인증 함수
+  login: (userInfo: User) => void;
+  logout: () => void;
 
   // --- 액션 함수 ---
   addTab: (tab: Tab) => void;          // 탭 추가
@@ -29,7 +42,26 @@ export const useAppStore = create<AppState>((set) => ({
   activeTabId: 'dashboard',
   isSidebarOpen: true, // 처음엔 사이드바 열림
 
-  // --- 함수 구현 ---
+  // ⭐ [NEW] 초기값
+  user: null,
+  isAuthenticated: false,
+
+  // ⭐ [NEW] 로그인 함수
+  login: (userInfo) => set({ 
+    user: userInfo, 
+    isAuthenticated: true,
+    // 로그인 시 기본 대시보드 탭 열어주기
+    tabs: [{ id: 'dashboard', title: '대시보드', componentKey: 'DashboardView' }],
+    activeTabId: 'dashboard'
+  }),
+
+  // ⭐ [NEW] 로그아웃 함수
+  logout: () => set({ 
+    user: null, 
+    isAuthenticated: false, 
+    tabs: [], // 탭 초기화
+    activeTabId: ''
+  }),
   
   // 1. 탭 활성화 (클릭 시 이동)
   setActiveTab: (id) => set({ activeTabId: id }),
