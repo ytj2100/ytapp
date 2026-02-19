@@ -11,24 +11,34 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const { isAuthenticated } = useAppStore();
+const router = useRouter();
+  
+  // ★ _hasHydrated(로딩완료여부)를 가져옵니다.
+  const { isAuthenticated, _hasHydrated } = useAppStore();
+
+  // Next.js hydration mismatch 방지용
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // ⭐ 로그인 안 했으면 로그인 페이지로 쫓아내기
   useEffect(() => {
-    if (isMounted && !isAuthenticated) {
-      console.log("로그인 안됨! 쫓아냅니다."); // 콘솔 확인용
-      router.replace('/'); 
-    }
-  }, [isAuthenticated, router, isMounted]);
+    // 1. 컴포넌트 마운트 전이면 대기
+    if (!isMounted) return;
 
-  // 아직 로딩 중이거나 로그인 안 된 상태면 로딩 표시
-  if (!isMounted || !isAuthenticated) {
+    // 2. ★★★ 저장소 데이터 로딩이 아직 안 끝났으면 대기 (여기서 튕기는 걸 막아줍니다)
+    if (!_hasHydrated) return;
+
+    // 3. 로딩도 다 끝났는데 인증이 안 되어 있다면? 그때 쫓아냄
+    if (!isAuthenticated) {
+      console.log("로딩 완료 후 확인: 인증 안됨. 이동합니다.");
+      router.replace('/');
+    }
+  }, [isMounted, _hasHydrated, isAuthenticated, router]);
+
+  // ★ 로딩 중이거나, 데이터 복구 중이면 화면을 보여주지 않고 로딩 표시
+  if (!isMounted || !_hasHydrated) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p className="text-muted-foreground">접속 권한 확인 중...</p>

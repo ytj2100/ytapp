@@ -15,13 +15,16 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password } = validatedFields.data
 
   try {
+    // ★ [수정 핵심] redirectTo를 지우고, redirect: false를 추가합니다.
     await signIn("credentials", {
       email,
       password,
-      // redirectTo: "/dashboard", // 로그인 성공 후 리다이렉트
-      // redirectTo: "/todolist", // 로그인 성공 후 리다이렉트
-      redirectTo: "/dashboard", // 로그인 성공 후 리다이렉트
+      redirect: false, // ★ 서버가 페이지를 강제로 이동시키지 않게 막음
     })
+    
+    // ★ 로그인 성공 시 명시적으로 성공 메시지 반환
+    return { success: "로그인 성공" };
+
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
